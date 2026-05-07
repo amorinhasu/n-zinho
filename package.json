@@ -7,8 +7,12 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "node --watch ./src/index.js",
-    "register": "node scripts/register-commands.js",
-    "deploy": "npm run register && npm start"
+"scripts": {
+  "start": "node ./src/index.js",
+  "dev": "node --watch ./src/index.js",
+  "register": "node scripts/register-commands.js",
+  "deploy": "npm run register && npm start"
+},
   },
   "keywords": [
     "discord",
