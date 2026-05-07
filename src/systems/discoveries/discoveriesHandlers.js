@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const { canUseMainSystem, canRamielAccess, isOwner } = require('../../utils/accessControl');
+const { canUseMainSystem, canRamielAccess } = require('../../utils/accessControl');
 const { buildNozinhoMainPanel } = require('../../commands/nozinho');
 const { buildDiscoveriesPanel, buildCreateDiscoveryModal, buildTryDiscoverModal } = require('./discoveriesUI');
 const { createDiscovery, findByKeyword, unlockDiscoveryById, listUnlockedDiscoveries } = require('./discoveriesRepository');
