@@ -23,7 +23,7 @@ async function openPlaylistPanel(interaction) {
 function musicDetailsEmbed(entry) {
   return new EmbedBuilder()
     .setColor(0x4ade80)
-    .setTitle(entry.title)
+    .setTitle(`🎧 ${entry.title} ✧˖°`)
     .addFields(
       { name: 'Artista', value: entry.artist },
       { name: 'Sentimento', value: entry.mood },
@@ -31,7 +31,7 @@ function musicDetailsEmbed(entry) {
       { name: 'Link', value: entry.url },
       { name: 'Cadastrada em', value: entry.created_at || 'sem registro' }
     )
-    .setFooter({ text: `Música #${entry.id}` })
+    .setFooter({ text: `Música #${entry.id} · cozy playlist corner 🧸` })
     .setTimestamp();
 }
 
@@ -75,7 +75,13 @@ async function handlePlaylistButtons(interaction) {
         return;
       }
 
-      const embed = musicDetailsEmbed(entry).setDescription('Hoje o coração escolheu esta canção para você.');
+      const randomLines = [
+        'Hoje o coração escolheu esta canção para aquecer o cantinho. 🌙',
+        'A vitrolinha do Nózinho separou esta faixa com carinho pra você. ✨',
+        'Essa música chegou agora como um abraço em forma de melodia. 🎶🤍'
+      ];
+
+      const embed = musicDetailsEmbed(entry).setDescription(randomLines[Math.floor(Math.random() * randomLines.length)]);
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
@@ -115,7 +121,11 @@ async function handlePlaylistModalSubmit(interaction) {
     });
 
     await interaction.reply({
-      content: 'Música guardada na biblioteca romântica do Nózinho. 🎵',
+      content: [
+        'Música guardada na biblioteca romântica do Nózinho. 🎵',
+        'Salvei essa música no cantinho sonoro de vocês. 🧸💗🎧',
+        'Pronto! A canção foi colocada na estante de memórias musicais. 🌸✨'
+      ][Math.floor(Math.random() * 3)],
       ephemeral: true
     });
   } catch (error) {

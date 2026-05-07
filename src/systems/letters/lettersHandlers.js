@@ -142,6 +142,12 @@ async function handleLetterModalSubmit(interaction) {
     const unlockType = interaction.fields.getTextInputValue('unlock_type')?.trim();
     const unlockValue = interaction.fields.getTextInputValue('unlock_value')?.trim();
 
+    const savingMessages = [
+      'Sua cartinha foi guardada com carinho no baú do Nózinho. 💗',
+      'Prontinho... guardei essa cartinha entre estrelas e fitinhas cor-de-rosa. ✨💌',
+      'Cartinha salva com sucesso! O baú sorriu baixinho quando você escreveu. 🌸🤍'
+    ];
+
     await createLetter(interaction.client.db, {
       title,
       body,
@@ -152,7 +158,7 @@ async function handleLetterModalSubmit(interaction) {
     });
 
     await interaction.reply({
-      content: 'Sua cartinha foi guardada com carinho no baú do Nózinho. 💗',
+      content: savingMessages[Math.floor(Math.random() * savingMessages.length)],
       ephemeral: true
     });
   } catch (error) {

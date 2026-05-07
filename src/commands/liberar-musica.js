@@ -45,8 +45,14 @@ module.exports = {
 
       await unlockPlaylistEntryById(interaction.client.db, id);
 
+      const unlockMessages = [
+        `Música **#${id}** liberada com sucesso na playlist do Nózinho. ✨`,
+        `A faixa **#${id}** foi liberada. Que ela embale um momento bem fofinho. 🎧💗`,
+        `Pronto! A música **#${id}** já pode tocar no cantinho de vocês. 🌸🤍`
+      ];
+
       await interaction.reply({
-        content: `Música **#${id}** liberada com sucesso na playlist do Nózinho. ✨`,
+        content: unlockMessages[Math.floor(Math.random() * unlockMessages.length)],
         ephemeral: true
       });
     } catch (error) {

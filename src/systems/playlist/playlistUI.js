@@ -11,9 +11,9 @@ const {
 function buildPlaylistPanelEmbed() {
   return new EmbedBuilder()
     .setColor(0x22c55e)
-    .setTitle('Playlist do Nózinho 🎧')
-    .setDescription('Uma biblioteca romântica de músicas com significado.')
-    .setFooter({ text: 'Cada música é uma memória cantada.' })
+    .setTitle('Playlist do Nózinho 🎧🧸')
+    .setDescription('Uma vitrolinha de sentimentos: canções que brilham como memórias vivas. ✨')
+    .setFooter({ text: 'Cada música toca um pedacinho do coração. ୨ৎ' })
     .setTimestamp();
 }
 

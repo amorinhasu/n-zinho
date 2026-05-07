@@ -11,9 +11,9 @@ const {
 function buildLettersPanelEmbed() {
   return new EmbedBuilder()
     .setColor(0xfb7185)
-    .setTitle('Cartinhas do Nózinho 💌')
-    .setDescription('Escreva, guarde e releia pedaços da sua história com carinho.')
-    .setFooter({ text: 'As cartinhas ficam seguras no baú do Nózinho.' })
+    .setTitle('Cartinhas do Nózinho ✧˖° 💌')
+    .setDescription('Um baú de palavras doces para guardar suspiros, saudades e promessas. ୨ৎ')
+    .setFooter({ text: 'Cada cartinha é um abraço dobrado em papel. 🌙' })
     .setTimestamp();
 }
 

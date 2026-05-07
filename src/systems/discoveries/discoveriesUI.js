@@ -3,8 +3,8 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ModalBuilder
 function buildDiscoveriesPanel() {
   const embed = new EmbedBuilder()
     .setColor(0xc084fc)
-    .setTitle('Descobertas & Cantinhos')
-    .setDescription('Cada pista pode revelar uma memória, uma imagem ou uma música escondida.');
+    .setTitle('Descobertas & Cantinhos ✧˖°')
+    .setDescription('Siga as pistas com calma... às vezes um segredo floresce em silêncio. 🌸🫧');
 
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId('discoveries:create').setLabel('criar cantinho').setStyle(ButtonStyle.Primary),

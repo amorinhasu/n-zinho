@@ -1,10 +1,20 @@
 const { buildNozinhoMainPanel } = require('../../commands/nozinho');
 const { buildSecretButtons, buildSecretEmbed } = require('./secretsUI');
 
+function buildSecretWelcomeEmbed() {
+  const welcomeLines = [
+    'A porta secreta rangeu devagar... e deixou você entrar com carinho. 💌',
+    'O cantinho oculto acendeu uma luz quentinha só para você. 🕯️🤍',
+    'As estrelas daqui sussurram baixinho: “bem-vinda(o) ao segredo”. ✨'
+  ];
+
+  return buildSecretEmbed().setDescription(`${welcomeLines[Math.floor(Math.random() * welcomeLines.length)]}\n\nVocê encontrou a passagem escondida... aqui moram segredos doces, memórias leves e silêncios que abraçam. ୨ৎ`);
+}
+
 async function openSecretPanelReply(interaction) {
   try {
     await interaction.reply({
-      embeds: [buildSecretEmbed()],
+      embeds: [buildSecretWelcomeEmbed()],
       components: [buildSecretButtons()],
       ephemeral: true
     });
@@ -17,7 +27,7 @@ async function openSecretPanelReply(interaction) {
 async function openSecretPanelUpdate(interaction) {
   try {
     await interaction.update({
-      embeds: [buildSecretEmbed()],
+      embeds: [buildSecretWelcomeEmbed()],
       components: [buildSecretButtons()]
     });
   } catch (error) {

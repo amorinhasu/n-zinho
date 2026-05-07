@@ -26,7 +26,7 @@ async function handleDiscoveriesButtons(interaction) {
     if (!canRamielAccess(interaction.user.id)) return interaction.reply({ content: 'Você não pode ver esta área.', ephemeral: true });
     const rows = await listUnlockedDiscoveries(interaction.client.db, 5);
     if (!rows.length) return interaction.reply({ content: 'Ainda não existem descobertas liberadas. ✨', ephemeral: true });
-    const embed = new EmbedBuilder().setColor(0xe879f9).setTitle('Descobertas já reveladas').setDescription(rows.map((d, i) => `${i + 1}. **${d.title}** · tipo: ${d.content_type} · liberado: ${d.unlocked_at || 'agora há pouco'}`).join('\n'));
+    const embed = new EmbedBuilder().setColor(0xe879f9).setTitle('Descobertas já reveladas ୨ৎ').setDescription(rows.map((d, i) => `${i + 1}. **${d.title}** · tipo: ${d.content_type} · liberado: ${d.unlocked_at || 'agora há pouco'}`).join('\n')).setFooter({ text: 'Cada descoberta é um pequeno milagre romântico. 💌' });
     return interaction.reply({ embeds: [embed], ephemeral: true });
   }
 
@@ -58,13 +58,26 @@ async function handleCreateDiscoveryModal(interaction) {
 async function processDiscoveryKeyword(interaction, keyword) {
   if (!canRamielAccess(interaction.user.id)) return interaction.reply({ content: 'Você não pode usar esse sistema.', ephemeral: true });
   const discovery = await findByKeyword(interaction.client.db, keyword.trim());
-  if (!discovery) return interaction.reply({ content: 'O silêncio respondeu... talvez a pista ainda não esteja completa. 🌙', ephemeral: true });
+  if (!discovery) {
+    const missLines = [
+      'O silêncio respondeu... talvez a pista ainda não esteja completa. 🌙',
+      'Quase lá... esse segredo ainda está escondidinho entre as estrelas. ✨',
+      'A palavra passou pertinho, mas o cantinho ainda quer um sussurro diferente. 🫧'
+    ];
+    return interaction.reply({ content: missLines[Math.floor(Math.random() * missLines.length)], ephemeral: true });
+  }
 
   await unlockDiscoveryById(interaction.client.db, discovery.id);
+  const revealLines = [
+    'Você sussurrou a palavra certa... e o cantinho respondeu com carinho. ✨',
+    'Algo escondidinho acabou de florescer para você. 🌸🤍',
+    'O segredo sorriu baixinho e se abriu como sonho. 🌙🫧'
+  ];
+
   const embed = new EmbedBuilder()
     .setColor(0xf0abfc)
-    .setTitle(`Você encontrou: ${discovery.title}`)
-    .setDescription(`Uma lembrança escondida foi revelada para você.\n\n${discovery.text_content}`)
+    .setTitle(`Você encontrou: ${discovery.title} ✧˖°`)
+    .setDescription(`${revealLines[Math.floor(Math.random() * revealLines.length)]}\n\n${discovery.text_content}`)
     .addFields({ name: 'Pista', value: discovery.hint || 'sem pista' });
 
   if (discovery.media_url) embed.setImage(discovery.media_url);

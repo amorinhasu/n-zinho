@@ -10,12 +10,12 @@ const { canUseMainSystem } = require('../utils/accessControl');
 function buildNozinhoMainPanel() {
   const introEmbed = new EmbedBuilder()
     .setColor(0xf472b6)
-    .setTitle('Nózinho ✨')
+    .setTitle('Nózinho ✧˖° ୨ৎ')
     .setDescription(
-      'Um cantinho íntimo para Nerissa e Ramiel.\n\n'
-      + 'Aqui cada clique é uma lembrança, um passo e uma descoberta. 💗'
+      '🧸💗 Bem-vindos ao cantinho mais quentinho do coração.\n\n'
+      + 'Aqui cada clique vira memória, cada detalhe vira carinho, e cada descoberta vira um abraço em forma de sonho. 🌙🫧'
     )
-    .setFooter({ text: 'Feito com carinho para uma história única.' })
+    .setFooter({ text: 'Nózinho · cozy love space 🌸🤍' })
     .setTimestamp();
 
   const row = new ActionRowBuilder().addComponents(

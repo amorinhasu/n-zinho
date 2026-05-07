@@ -3,9 +3,9 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('
 function buildSecretEmbed() {
   return new EmbedBuilder()
     .setColor(0x7c3aed)
-    .setTitle('Área Secreta ✨')
-    .setDescription('Você encontrou a passagem escondida. Aqui moram detalhes que o coração guarda em silêncio.')
-    .setFooter({ text: 'Nózinho · confidencial' })
+    .setTitle('Área Secreta ✧˖° 🌙')
+    .setDescription('Você encontrou a passagem escondida... aqui moram segredos doces, memórias leves e silêncios que abraçam. ୨ৎ')
+    .setFooter({ text: 'Nózinho · confidencial 🌸🤍🫧' })
     .setTimestamp();
 }
 
