@@ -2,11 +2,14 @@
   "name": "nozinho-bot",
   "version": "1.0.0",
   "description": "Bot romântico e intimista para Nerissa e Ramiel",
-  "main": "./src/index.js",
-  "type": "commonjs",
-  "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "node --watch ./src/index.js",
+"description": "Bot romântico e intimista para Nerissa e Ramiel",
+"main": "./src/index.js",
+"type": "commonjs",
+"scripts": {
+  "start": "node ./src/index.js",
+  "dev": "node --watch ./src/index.js",
+  "register": "node scripts/register-commands.js"
+},
     "register": "node scripts/register-commands.js"
   },
   "keywords": [
