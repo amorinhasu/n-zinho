@@ -14,6 +14,13 @@ const {
   handlePlaylistButtons,
   handlePlaylistModalSubmit
 } = require('../systems/playlist/playlistHandlers');
+const {
+  openDiscoveriesPanel,
+  handleDiscoveriesButtons,
+  handleCreateDiscoveryModal,
+  processDiscoveryKeyword
+} = require('../systems/discoveries/discoveriesHandlers');
+const { openManualPanel, handleManualButtons } = require('../systems/manual/manualHandlers');
 
 module.exports = {
   name: 'interactionCreate',
@@ -35,21 +42,23 @@ module.exports = {
       }
 
       if (interaction.isButton()) {
-        if (!canUseMainSystem(interaction.user.id)) {
-          await interaction.reply({
-            content: 'Este painel é reservado para a Nerissa. 💌',
-            ephemeral: true
-          });
-          return;
-        }
-
         if (interaction.customId === 'nozinho:letters') {
+          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
           await openLettersPanel(interaction);
           return;
         }
 
         if (interaction.customId === 'nozinho:playlist') {
+          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
           await openPlaylistPanel(interaction);
+          return;
+        }
+        if (interaction.customId === 'nozinho:discoveries') {
+          await openDiscoveriesPanel(interaction);
+          return;
+        }
+        if (interaction.customId === 'nozinho:manual') {
+          await openManualPanel(interaction);
           return;
         }
 
@@ -81,6 +90,14 @@ module.exports = {
           await handleSecretButtons(interaction);
           return;
         }
+        if (interaction.customId.startsWith('discoveries:')) {
+          await handleDiscoveriesButtons(interaction);
+          return;
+        }
+        if (interaction.customId.startsWith('manual:')) {
+          await handleManualButtons(interaction);
+          return;
+        }
 
         await interaction.reply({
           content: 'Esta seção ainda está em construção nesta fase inicial. ✨',
@@ -90,21 +107,26 @@ module.exports = {
       }
 
       if (interaction.isModalSubmit()) {
-        if (!canUseMainSystem(interaction.user.id)) {
-          await interaction.reply({
-            content: 'Este sistema é reservado para a Nerissa. 💌',
-            ephemeral: true
-          });
-          return;
-        }
-
         if (interaction.customId === 'letters:create') {
+          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este sistema é reservado para a Nerissa. 💌', ephemeral: true });
           await handleLetterModalSubmit(interaction);
           return;
         }
 
         if (interaction.customId === 'playlist:create') {
+          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este sistema é reservado para a Nerissa. 💌', ephemeral: true });
           await handlePlaylistModalSubmit(interaction);
+          return;
+        }
+
+        if (interaction.customId === 'discoveries:create') {
+          await handleCreateDiscoveryModal(interaction);
+          return;
+        }
+
+        if (interaction.customId === 'discoveries:try') {
+          const keyword = interaction.fields.getTextInputValue('keyword');
+          await processDiscoveryKeyword(interaction, keyword);
         }
       }
     } catch (error) {

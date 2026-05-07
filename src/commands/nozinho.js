@@ -41,7 +41,18 @@ function buildNozinhoMainPanel() {
       .setStyle(ButtonStyle.Secondary)
   );
 
-  return { introEmbed, row };
+  const secondaryRow = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('nozinho:discoveries')
+      .setLabel('descobertas')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('nozinho:manual')
+      .setLabel('manual')
+      .setStyle(ButtonStyle.Secondary)
+  );
+
+  return { introEmbed, row, secondaryRow };
 }
 
 module.exports = {
@@ -61,11 +72,11 @@ module.exports = {
         return;
       }
 
-      const { introEmbed, row } = buildNozinhoMainPanel();
+      const { introEmbed, row, secondaryRow } = buildNozinhoMainPanel();
 
       await interaction.reply({
         embeds: [introEmbed],
-        components: [row],
+        components: [row, secondaryRow],
         ephemeral: true
       });
     } catch (error) {

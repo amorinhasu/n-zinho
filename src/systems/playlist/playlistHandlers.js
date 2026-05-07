@@ -94,8 +94,8 @@ async function handlePlaylistButtons(interaction) {
     }
 
     if (interaction.customId === 'playlist:back') {
-      const { introEmbed, row } = buildNozinhoMainPanel();
-      await interaction.update({ embeds: [introEmbed], components: [row] });
+      const { introEmbed, row, secondaryRow } = buildNozinhoMainPanel();
+      await interaction.update({ embeds: [introEmbed], components: [row, secondaryRow] });
     }
   } catch (error) {
     console.error('[PLAYLIST] Erro nos botões:', error);

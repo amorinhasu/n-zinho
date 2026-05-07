@@ -1,4 +1,4 @@
-const { ownerId, targetUserId } = require('../config');
+const { ownerId, targetUserId, loveId } = require('../config');
 
 function isOwner(userId) {
   try {
@@ -20,5 +20,13 @@ function canUseMainSystem(userId) {
 
 module.exports = {
   isOwner,
-  canUseMainSystem
+  canUseMainSystem,
+  canRamielAccess(userId) {
+    try {
+      return userId === loveId || canUseMainSystem(userId);
+    } catch (error) {
+      console.error('[ACCESS] Erro ao validar acesso do Ramiel:', error);
+      return false;
+    }
+  }
 };

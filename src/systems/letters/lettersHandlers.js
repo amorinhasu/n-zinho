@@ -125,8 +125,8 @@ async function handleLettersButtons(interaction) {
     }
 
     if (interaction.customId === 'letters:back') {
-      const { introEmbed, row } = buildNozinhoMainPanel();
-      await interaction.update({ embeds: [introEmbed], components: [row] });
+      const { introEmbed, row, secondaryRow } = buildNozinhoMainPanel();
+      await interaction.update({ embeds: [introEmbed], components: [row, secondaryRow] });
     }
   } catch (error) {
     console.error('[LETTERS] Erro ao lidar com botões de cartinhas:', error);

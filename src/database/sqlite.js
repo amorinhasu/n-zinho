@@ -68,6 +68,22 @@ function initDatabase() {
           unlocked_at TEXT
         )
       `);
+
+      db.run(`
+        CREATE TABLE IF NOT EXISTS discoveries (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          content_type TEXT NOT NULL,
+          text_content TEXT NOT NULL,
+          media_url TEXT,
+          hint TEXT NOT NULL,
+          unlock_keyword TEXT NOT NULL UNIQUE,
+          is_unlocked INTEGER NOT NULL DEFAULT 0,
+          created_by TEXT NOT NULL,
+          created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+          unlocked_at TEXT
+        )
+      `);
     });
 
     return db;
