@@ -49,4 +49,29 @@ function listUnlockedDiscoveries(db, limit = 5) {
   });
 }
 
-module.exports = { createDiscovery, findByKeyword, unlockDiscoveryById, listUnlockedDiscoveries };
+function listRecentDiscoveries(db, limit = 8) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT id, title, hint, is_unlocked, created_at FROM discoveries ORDER BY id DESC LIMIT ?',
+      [limit],
+      (error, rows) => (error ? reject(error) : resolve(rows || []))
+    );
+  });
+}
+
+function getDiscoveryById(db, id) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM discoveries WHERE id = ?', [id], (error, row) => (error ? reject(error) : resolve(row || null)));
+  });
+}
+
+function deleteDiscoveryById(db, id) {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM discoveries WHERE id = ?', [id], function onDelete(error) {
+      if (error) return reject(error);
+      resolve(this.changes || 0);
+    });
+  });
+}
+
+module.exports = { createDiscovery, findByKeyword, unlockDiscoveryById, listUnlockedDiscoveries, listRecentDiscoveries, getDiscoveryById, deleteDiscoveryById };

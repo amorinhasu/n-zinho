@@ -4,6 +4,7 @@ const {
   getPlaylistEntryById,
   unlockPlaylistEntryById
 } = require('../systems/playlist/playlistRepository');
+const { sendOwnerLog } = require('../systems/notifications/ownerLog');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -55,6 +56,8 @@ module.exports = {
         content: unlockMessages[Math.floor(Math.random() * unlockMessages.length)],
         ephemeral: true
       });
+
+      await sendOwnerLog(interaction.client, { action: 'Música liberada manualmente', userTag: interaction.user.tag, userId: interaction.user.id, detail: `Música #${id}` });
     } catch (error) {
       console.error('[CMD] Erro no comando /liberar-musica:', error);
       if (interaction.deferred || interaction.replied) {

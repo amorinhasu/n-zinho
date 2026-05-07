@@ -21,6 +21,8 @@ const {
   processDiscoveryKeyword
 } = require('../systems/discoveries/discoveriesHandlers');
 const { openManualPanel, handleManualButtons } = require('../systems/manual/manualHandlers');
+const { handleAdminButtons, handleAdminModals } = require('../systems/admin/adminHandlers');
+const { sendOwnerLog } = require('../systems/notifications/ownerLog');
 
 module.exports = {
   name: 'interactionCreate',
@@ -43,13 +45,19 @@ module.exports = {
 
       if (interaction.isButton()) {
         if (interaction.customId === 'nozinho:letters') {
-          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
+          if (!canUseMainSystem(interaction.user.id)) {
+            await sendOwnerLog(interaction.client, { action: 'Tentativa sem permissão no painel cartinhas', userTag: interaction.user.tag, userId: interaction.user.id });
+            return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
+          }
           await openLettersPanel(interaction);
           return;
         }
 
         if (interaction.customId === 'nozinho:playlist') {
-          if (!canUseMainSystem(interaction.user.id)) return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
+          if (!canUseMainSystem(interaction.user.id)) {
+            await sendOwnerLog(interaction.client, { action: 'Tentativa sem permissão no painel playlist', userTag: interaction.user.tag, userId: interaction.user.id });
+            return interaction.reply({ content: 'Este painel é reservado para a Nerissa. 💌', ephemeral: true });
+          }
           await openPlaylistPanel(interaction);
           return;
         }
@@ -98,6 +106,10 @@ module.exports = {
           await handleManualButtons(interaction);
           return;
         }
+        if (interaction.customId.startsWith('admin:')) {
+          await handleAdminButtons(interaction);
+          return;
+        }
 
         await interaction.reply({
           content: 'Esta seção ainda está em construção nesta fase inicial. ✨',
@@ -127,6 +139,11 @@ module.exports = {
         if (interaction.customId === 'discoveries:try') {
           const keyword = interaction.fields.getTextInputValue('keyword');
           await processDiscoveryKeyword(interaction, keyword);
+          return;
+        }
+
+        if (interaction.customId.startsWith('admin:')) {
+          await handleAdminModals(interaction);
         }
       }
     } catch (error) {

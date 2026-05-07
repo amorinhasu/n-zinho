@@ -11,6 +11,7 @@ const {
   buildWriteLetterModal
 } = require('./lettersUI');
 const { buildNozinhoMainPanel } = require('../../commands/nozinho');
+const { sendOwnerLog } = require('../notifications/ownerLog');
 
 async function openLettersPanel(interaction) {
   try {
@@ -148,7 +149,7 @@ async function handleLetterModalSubmit(interaction) {
       'Cartinha salva com sucesso! O baú sorriu baixinho quando você escreveu. 🌸🤍'
     ];
 
-    await createLetter(interaction.client.db, {
+    const createdId = await createLetter(interaction.client.db, {
       title,
       body,
       mood,
@@ -160,6 +161,13 @@ async function handleLetterModalSubmit(interaction) {
     await interaction.reply({
       content: savingMessages[Math.floor(Math.random() * savingMessages.length)],
       ephemeral: true
+    });
+
+    await sendOwnerLog(interaction.client, {
+      action: 'Nova cartinha criada',
+      userTag: interaction.user.tag,
+      userId: interaction.user.id,
+      detail: `Carta #${createdId} · ${title}`
     });
   } catch (error) {
     console.error('[LETTERS] Erro ao salvar cartinha:', error);

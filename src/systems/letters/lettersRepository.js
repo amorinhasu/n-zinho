@@ -124,10 +124,24 @@ function unlockLetterById(db, id) {
   });
 }
 
+function deleteLetterById(db, id) {
+  return new Promise((resolve, reject) => {
+    try {
+      db.run('DELETE FROM letters WHERE id = ?', [id], function onDelete(error) {
+        if (error) return reject(error);
+        resolve(this.changes || 0);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 module.exports = {
   createLetter,
   listLettersByUser,
   listUnlockedLettersByUser,
   getLetterById,
-  unlockLetterById
+  unlockLetterById,
+  deleteLetterById
 };

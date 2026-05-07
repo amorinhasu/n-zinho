@@ -84,6 +84,19 @@ function initDatabase() {
           unlocked_at TEXT
         )
       `);
+
+      db.run(`
+        CREATE TABLE IF NOT EXISTS secret_keys (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          label TEXT NOT NULL,
+          keyword TEXT NOT NULL UNIQUE,
+          description TEXT,
+          is_active INTEGER NOT NULL DEFAULT 1,
+          created_by TEXT NOT NULL,
+          created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+          used_at TEXT
+        )
+      `);
     });
 
     return db;

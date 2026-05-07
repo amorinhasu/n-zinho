@@ -3,6 +3,7 @@ const { canUseMainSystem, canRamielAccess } = require('../../utils/accessControl
 const { buildNozinhoMainPanel } = require('../../commands/nozinho');
 const { buildDiscoveriesPanel, buildCreateDiscoveryModal, buildTryDiscoverModal } = require('./discoveriesUI');
 const { createDiscovery, findByKeyword, unlockDiscoveryById, listUnlockedDiscoveries } = require('./discoveriesRepository');
+const { sendOwnerLog } = require('../notifications/ownerLog');
 
 function inferContentType(text, mediaUrl) {
   if (text && mediaUrl) return 'misto';
@@ -53,10 +54,12 @@ async function handleCreateDiscoveryModal(interaction) {
   const contentType = inferContentType(textContent, mediaUrl);
   const result = await createDiscovery(interaction.client.db, { title, textContent, mediaUrl: mediaUrl || null, hint, unlockKeyword, contentType, createdBy: interaction.user.id });
   await interaction.reply({ content: `Cantinho #${result.id} guardado com carinho.`, ephemeral: true });
+  await sendOwnerLog(interaction.client, { action: 'Novo cantinho criado', userTag: interaction.user.tag, userId: interaction.user.id, detail: `Cantinho #${result.id} · ${title}` });
 }
 
 async function processDiscoveryKeyword(interaction, keyword) {
   if (!canRamielAccess(interaction.user.id)) return interaction.reply({ content: 'Você não pode usar esse sistema.', ephemeral: true });
+  await sendOwnerLog(interaction.client, { action: 'Tentativa de descoberta por palavra', userTag: interaction.user.tag, userId: interaction.user.id, detail: `Palavra: ${keyword}` });
   const discovery = await findByKeyword(interaction.client.db, keyword.trim());
   if (!discovery) {
     const missLines = [
@@ -68,6 +71,7 @@ async function processDiscoveryKeyword(interaction, keyword) {
   }
 
   await unlockDiscoveryById(interaction.client.db, discovery.id);
+  await sendOwnerLog(interaction.client, { action: 'Descoberta acertada', userTag: interaction.user.tag, userId: interaction.user.id, detail: `Cantinho #${discovery.id} · ${discovery.title}` });
   const revealLines = [
     'Você sussurrou a palavra certa... e o cantinho respondeu com carinho. ✨',
     'Algo escondidinho acabou de florescer para você. 🌸🤍',

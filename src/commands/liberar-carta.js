@@ -4,6 +4,7 @@ const {
   getLetterById,
   unlockLetterById
 } = require('../systems/letters/lettersRepository');
+const { sendOwnerLog } = require('../systems/notifications/ownerLog');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -49,6 +50,8 @@ module.exports = {
         content: `Cartinha **#${id}** liberada com sucesso no baú do Nózinho. ✨`,
         ephemeral: true
       });
+
+      await sendOwnerLog(interaction.client, { action: 'Carta liberada manualmente', userTag: interaction.user.tag, userId: interaction.user.id, detail: `Carta #${id}` });
     } catch (error) {
       console.error('[CMD] Erro no comando /liberar-carta:', error);
 

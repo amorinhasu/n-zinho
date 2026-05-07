@@ -1,5 +1,6 @@
 const { buildNozinhoMainPanel } = require('../../commands/nozinho');
 const { buildSecretButtons, buildSecretEmbed } = require('./secretsUI');
+const { sendOwnerLog } = require('../notifications/ownerLog');
 
 function buildSecretWelcomeEmbed() {
   const welcomeLines = [
@@ -18,6 +19,7 @@ async function openSecretPanelReply(interaction) {
       components: [buildSecretButtons()],
       ephemeral: true
     });
+    await sendOwnerLog(interaction.client, { action: 'Área secreta aberta', userTag: interaction.user.tag, userId: interaction.user.id });
   } catch (error) {
     console.error('[SECRETS] Erro ao responder painel secreto:', error);
     throw error;
@@ -30,6 +32,7 @@ async function openSecretPanelUpdate(interaction) {
       embeds: [buildSecretWelcomeEmbed()],
       components: [buildSecretButtons()]
     });
+    await sendOwnerLog(interaction.client, { action: 'Área secreta reaberta por botão', userTag: interaction.user.tag, userId: interaction.user.id });
   } catch (error) {
     console.error('[SECRETS] Erro ao atualizar painel secreto:', error);
     throw error;

@@ -7,6 +7,7 @@ const {
   getPlaylistEntryById,
   getRandomUnlockedPlaylistEntryByUser
 } = require('./playlistRepository');
+const { sendOwnerLog } = require('../notifications/ownerLog');
 
 async function openPlaylistPanel(interaction) {
   try {
@@ -111,7 +112,7 @@ async function handlePlaylistButtons(interaction) {
 
 async function handlePlaylistModalSubmit(interaction) {
   try {
-    await createPlaylistEntry(interaction.client.db, {
+    const createdId = await createPlaylistEntry(interaction.client.db, {
       title: interaction.fields.getTextInputValue('title')?.trim(),
       artist: interaction.fields.getTextInputValue('artist')?.trim(),
       url: interaction.fields.getTextInputValue('url')?.trim(),
@@ -127,6 +128,13 @@ async function handlePlaylistModalSubmit(interaction) {
         'Pronto! A canção foi colocada na estante de memórias musicais. 🌸✨'
       ][Math.floor(Math.random() * 3)],
       ephemeral: true
+    });
+
+    await sendOwnerLog(interaction.client, {
+      action: 'Nova música criada',
+      userTag: interaction.user.tag,
+      userId: interaction.user.id,
+      detail: `Música #${createdId}`
     });
   } catch (error) {
     console.error('[PLAYLIST] Erro ao salvar música:', error);
