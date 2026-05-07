@@ -1,0 +1,28 @@
+{
+  "name": "nozinho-bot",
+  "version": "1.0.0",
+  "description": "Bot romântico e intimista para Nerissa e Ramiel",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "register": "node scripts/register-commands.js"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "sqlite3",
+    "dotenv"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.20.0",
+    "dotenv": "^16.6.1",
+    "sqlite3": "^5.1.7"
+  }
+}
